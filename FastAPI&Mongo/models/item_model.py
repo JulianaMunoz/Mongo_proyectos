@@ -5,9 +5,7 @@ class Item(BaseModel):
     _id: str = None
     nombre: str
     descripcion: Optional[str] = None
-    direccion: Optional[str] = None
-    latitud: Optional[float] = None
-    longitud: Optional[float] = None
+    precio: int = None
 
 class ItemResponse(Item):
     id: str

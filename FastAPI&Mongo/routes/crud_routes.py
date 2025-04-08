@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from models.item_model import Item, ItemResponse
-from db.conexion_db import get_database
+from datab.conexion_db import get_database
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
 router = APIRouter()
@@ -10,9 +10,7 @@ def crud_helper(item: dict) -> dict:
         "id": str(item["_id"]),
         "nombre": item["nombre"],
         "descripcion": item.get("descripcion"),
-        "direccion": item.get("direccion"),
-        "latitud": item.get("latitud"),
-        "longitud": item.get("longitud")
+        "precio": item.get("precio"),
     }
 
 @router.get("/items/", response_model=list[ItemResponse])
@@ -38,7 +36,7 @@ async def get_item(id: str, db: AsyncIOMotorDatabase = Depends(get_database)):
     item = await db.items.find_one({"_id": id})
     if item:
         return crud_helper(item)
-    raise HTTPException(status_code=404, detail="Sitio no encontrado")
+    raise HTTPException(status_code=404, detail="Item no encontrado")
 
 @router.put("/items/{id}", response_model=ItemResponse)
 async def update_sitio(
@@ -51,7 +49,7 @@ async def update_sitio(
     if result.modified_count:
         item_actualizado = await db.items.find_one({"_id": id})
         return crud_helper(item_actualizado)
-    raise HTTPException(status_code=404, detail="Sitio no encontrado")
+    raise HTTPException(status_code=404, detail="Item no encontrado")
 
 @router.delete("/{id}")
 async def delete_sitio(

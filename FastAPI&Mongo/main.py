@@ -1,7 +1,7 @@
 # main.py
 from fastapi import FastAPI
 from routes.crud_routes import router as crud_router
-from db.conexion_db import connect_to_mongo, close_mongo_connection
+from datab.conexion_db import connect_to_mongo, close_mongo_connection
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,13 +9,10 @@ from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()  # Carga las variables de entorno
 
 origins = [
-    "http://localhost:5500",  # Ajusta la URL de tu app web
-    "http://127.0.0.1:5500",
-    # Agrega otros orígenes que necesites
+    "http://localhost:5500",
 ]
 
-
-app = FastAPI(title="API de Sitios Turísticos en Bogotá")
+app = FastAPI()
 
 
 app.add_middleware(
