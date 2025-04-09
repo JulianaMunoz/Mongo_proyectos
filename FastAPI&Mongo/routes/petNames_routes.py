@@ -1,5 +1,4 @@
 from fastapi import APIRouter, HTTPException
-from typing import Literal
 from models.pet_model import PetRequest
 import random
 
