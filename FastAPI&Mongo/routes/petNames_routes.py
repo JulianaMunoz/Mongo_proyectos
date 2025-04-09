@@ -22,7 +22,7 @@ nombres_por_tipo = {
     }
 }
 
-@router.post("/nombre-mascota/")
+@router.post("/pets/")
 def generar_nombre(req: PetRequest):
     nombre = random.choice(nombres_por_tipo[req.tipo][req.personalidad])
     return {
