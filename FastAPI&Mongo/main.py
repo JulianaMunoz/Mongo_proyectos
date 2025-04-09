@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from routes.crud_routes import router as crud_router
+from routes.petNames_routes import router as petNames_router
 from datab.conexion_db import connect_to_mongo, close_mongo_connection
 
 load_dotenv() 
@@ -32,5 +33,8 @@ async def startup_db_client():
 @app.on_event("shutdown")
 async def shutdown_db_client():
     await close_mongo_connection()
+    
 
 app.include_router(crud_router, tags=["items"])
+app.include_router(petNames_router, tags=["pets"])
+
