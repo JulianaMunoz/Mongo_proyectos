@@ -10,7 +10,12 @@ load_dotenv()
 app = FastAPI()
 
 
-origins = ["http://localhost:5500"]
+origins = [
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "https://mongoproyectos-production.up.railway.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
