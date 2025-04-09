@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 from typing import Literal
+from models.pet_model import PetRequest
 import random
 
 router = APIRouter()
@@ -22,14 +23,11 @@ nombres_por_tipo = {
     }
 }
 
-@router.get("/nombre-mascota")
-def generar_nombre(
-    tipo: Literal["perro", "gato", "conejo"] = Query(..., description="Tipo de mascota"),
-    personalidad: Literal["jugueton", "tranquilo", "valiente"] = Query(..., description="Personalidad")
-):
-    nombre = random.choice(nombres_por_tipo[tipo][personalidad])
+@router.post("/nombre-mascota/")
+def generar_nombre(req: PetRequest):
+    nombre = random.choice(nombres_por_tipo[req.tipo][req.personalidad])
     return {
         "nombre_sugerido": nombre,
-        "tipo": tipo,
-        "personalidad": personalidad
+        "tipo": req.tipo,
+        "personalidad": req.personalidad
     }
